@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>Helitha Rupasinghe | Polygot Dev</title>
+
+	<link rel="icon" href="/public/favicon.ico" type="image/png" />
+
+	<link href="https://fonts.googleapis.com/css?family=Reem+Kufi|Roboto:300" rel="stylesheet">
+	<link href="https://use.fontawesome.com/releases/v5.13.1/css/all.css" rel="stylesheet">
+	<link rel="stylesheet" href="/css/reset.css">
+	<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+	<main>
+		<canvas></canvas>
+	    <p id="p_text"><span class="typeline"></span></p>
+		<!-- Find your icons from here - https://fontawesome.com/icons?d=gallery&s=brands -->
+		<div class="icons-social">
+			<a target="_blank" href="https://github.com/hr21don"><i class="fab fa-github fa-animated"></i></a>
+			<a target="_blank" href="https://www.behance.net/hrdevelopment2021"><i class="fab fa-behance fa-animated"></i></a>
+			<a target="_blank" href="https://www.linkedin.com/in/helitharupasinghe/"><i class="fab fa-linkedin fa-animated"></i></a>
+			<a target="_blank" href="https://dev.to/hr21don"><i class="fab fa-dev fa-animated"></i></a>
+      <a target="_blank" href="https://medium.com/@hr-development"><i class="fab fa-medium fa-animated"></i></a>
+			<a target="_blank" href="https://dribbble.com/hr21don"><i class="fab fa-dribbble fa-animated"></i></a>
+			<a target="_blank" href="https://codepen.io/hr21don"><i class="fab fa-codepen fa-animated"></i></a>
+      <a target="_blank" href="https://techtribes-devfolio-2023.netlify.app/"><i class="fab fa-font-awesome fa-animated"></i></a>
+    </div>
+	<div class="audio-wrapper">
+		<audio id="audio" autoPlay loop>
+			<source src="/music/abstract-jazz.mp3" preload="metadata" type="audio/mpeg"/>
+			 Your browser does not support the audio element.
+		</audio>
+		<button id="playPauseBTN" onclick="playPause()">Play ►</button>
+		</div>
+	</main>
+	<script>
+	var audio = document.getElementById('audio');
+		var playPauseBTN = document.getElementById('playPauseBTN');
+		var count = 0;
+		
+		function playPause(){
+			if(count == 0){
+				count = 1;
+				audio.play();
+				playPauseBTN.innerHTML = "Pause";
+			}else{
+				count = 0;
+				audio.pause();
+				playPauseBTN.innerHTML = "Play ►";
+			}
+		
+		}
+		
+		function stop(){
+			playPause()
+			audio.pause();
+			audio.currentTime = 0;
+			playPauseBTN.innerHTML = "Play ►";
+		}
+		
+		</script>
+	 <!-- Core theme JS-->
+	 <script src="main.js"></script>
+	 <!--JQUERY CDN -->
+	 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	 <!--Typed CDN-->
+	 <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.6/lib/typed.min.js"></script>
+</body>
+</html>
