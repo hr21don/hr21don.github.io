@@ -4,11 +4,12 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+	<meta name="theme-color" content="#000000" />
+	<meta name="description" content="A minimal landing page for developers." />
 	<title>Helitha Rupasinghe | Polygot Dev</title>
 
 	<link rel="icon" href="/public/favicon.ico" type="image/png" />
-
+	<link rel="manifest" href="/site.webmanifest">
 	<link href="https://fonts.googleapis.com/css?family=Reem+Kufi|Roboto:300" rel="stylesheet">
 	<link href="https://use.fontawesome.com/releases/v5.13.1/css/all.css" rel="stylesheet">
 	<link rel="stylesheet" href="/css/reset.css">
@@ -20,14 +21,14 @@
 	    <p id="p_text"><span class="typeline"></span></p>
 		<!-- Find your icons from here - https://fontawesome.com/icons?d=gallery&s=brands -->
 		<div class="icons-social">
-			<a target="_blank" href="https://github.com/hr21don"><i class="fab fa-github fa-animated"></i></a>
-			<a target="_blank" href="https://www.behance.net/hrdevelopment2021"><i class="fab fa-behance fa-animated"></i></a>
-			<a target="_blank" href="https://www.linkedin.com/in/helitharupasinghe/"><i class="fab fa-linkedin fa-animated"></i></a>
-			<a target="_blank" href="https://dev.to/hr21don"><i class="fab fa-dev fa-animated"></i></a>
-      		<a target="_blank" href="https://medium.com/@hr-development"><i class="fab fa-medium fa-animated"></i></a>
-			<a target="_blank" href="https://dribbble.com/hr21don"><i class="fab fa-dribbble fa-animated"></i></a>
-			<a target="_blank" href="https://codepen.io/hr21don"><i class="fab fa-codepen fa-animated"></i></a>
-      		<a target="_blank" href="https://www.figma.com/community/file/1218870602283863949"><i class="fab fa-figma fa-animated"></i></a>
+			<a target="_blank" href="https://github.com/hr21don" aria-label="Github-Link"><i class="fab fa-github fa-animated"></i></a>
+			<a target="_blank" href="https://www.behance.net/hrdevelopment2021" aria-label="Behance-Link"><i class="fab fa-behance fa-animated"></i></a>
+			<a target="_blank" href="https://www.linkedin.com/in/helitharupasinghe/" aria-label="LinkedIn-Link"><i class="fab fa-linkedin fa-animated"></i></a>
+			<a target="_blank" href="https://dev.to/hr21don" aria-label="Dev-Link"><i class="fab fa-dev fa-animated"></i></a>
+      		<a target="_blank" href="https://medium.com/@hr-development" aria-label="Medium-Link"><i class="fab fa-medium fa-animated"></i></a>
+			<a target="_blank" href="https://dribbble.com/hr21don" aria-label="Dribble-Link"><i class="fab fa-dribbble fa-animated"></i></a>
+			<a target="_blank" href="https://codepen.io/hr21don" aria-label="CodePen-Link"><i class="fab fa-codepen fa-animated"></i></a>
+      		<a target="_blank" href="https://www.figma.com/community/file/1218870602283863949" aria-label="Figma-Link"><i class="fab fa-figma fa-animated"></i></a>
     </div>
 	<div class="audio-wrapper">
 		<audio id="audio" autoPlay loop>
@@ -69,5 +70,13 @@
 	 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	 <!--Typed CDN-->
 	 <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.6/lib/typed.min.js"></script>
+	 <!--Service worker-->
+	 <script>
+		if ('serviceWorker' in navigator) {
+		  navigator.serviceWorker.register('/service-worker.js')
+			.then(() => console.log('Service Worker registered successfully.'))
+			.catch((error) => console.error('Error registering Service Worker:', error));
+		}
+	  </script>
 </body>
 </html>
