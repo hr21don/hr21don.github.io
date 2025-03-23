@@ -1,1 +1,687 @@
-'use strict';const _0x59e279=_0x1dc7;(function(_0x3fa517,_0x55227e){const _0xa66c9a=_0x1dc7,_0x5302eb=_0x3fa517();while(!![]){try{const _0x10a887=parseInt(_0xa66c9a(0xe5))/0x1+-parseInt(_0xa66c9a(0x128))/0x2+parseInt(_0xa66c9a(0xb9))/0x3+parseInt(_0xa66c9a(0x137))/0x4+-parseInt(_0xa66c9a(0xfb))/0x5+-parseInt(_0xa66c9a(0x117))/0x6+-parseInt(_0xa66c9a(0x116))/0x7*(parseInt(_0xa66c9a(0xc0))/0x8);if(_0x10a887===_0x55227e)break;else _0x5302eb['push'](_0x5302eb['shift']());}catch(_0x2d4712){_0x5302eb['push'](_0x5302eb['shift']());}}}(_0x5a7f,0xf21c4));const canvas=document[_0x59e279(0xcf)]('canvas')[0x0];canvas['width']=canvas[_0x59e279(0xe2)],canvas[_0x59e279(0x115)]=canvas[_0x59e279(0x10d)];let config={'TEXTURE_DOWNSAMPLE':0x1,'DENSITY_DISSIPATION':0.98,'VELOCITY_DISSIPATION':0.99,'PRESSURE_DISSIPATION':0.8,'PRESSURE_ITERATIONS':0x19,'CURL':0x1e,'SPLAT_RADIUS':0.004},pointers=[],splatStack=[];const {gl,ext}=getWebGLContext(canvas);function getWebGLContext(_0x3a8054){const _0x3afe0c=_0x59e279,_0x56cae3={'alpha':![],'depth':![],'stencil':![],'antialias':![]};let _0x1639ae=_0x3a8054['getContext'](_0x3afe0c(0xe8),_0x56cae3);const _0xa8b32b=!!_0x1639ae;if(!_0xa8b32b)_0x1639ae=_0x3a8054[_0x3afe0c(0xfa)](_0x3afe0c(0x141),_0x56cae3)||_0x3a8054[_0x3afe0c(0xfa)](_0x3afe0c(0xee),_0x56cae3);let _0x18e3c3,_0x25c6f7;_0xa8b32b?(_0x1639ae[_0x3afe0c(0x106)]('EXT_color_buffer_float'),_0x25c6f7=_0x1639ae['getExtension'](_0x3afe0c(0x10b))):(_0x18e3c3=_0x1639ae['getExtension'](_0x3afe0c(0xc4)),_0x25c6f7=_0x1639ae[_0x3afe0c(0x106)]('OES_texture_half_float_linear'));_0x1639ae[_0x3afe0c(0x101)](0x0,0x0,0x0,0x1);const _0x35c041=_0xa8b32b?_0x1639ae[_0x3afe0c(0xf4)]:_0x18e3c3[_0x3afe0c(0x132)];let _0x4dbfc6,_0x2c9a4c,_0x454803;return _0xa8b32b?(_0x4dbfc6=getSupportedFormat(_0x1639ae,_0x1639ae[_0x3afe0c(0xf6)],_0x1639ae[_0x3afe0c(0xbb)],_0x35c041),_0x2c9a4c=getSupportedFormat(_0x1639ae,_0x1639ae[_0x3afe0c(0xed)],_0x1639ae['RG'],_0x35c041),_0x454803=getSupportedFormat(_0x1639ae,_0x1639ae[_0x3afe0c(0xb3)],_0x1639ae[_0x3afe0c(0xf0)],_0x35c041)):(_0x4dbfc6=getSupportedFormat(_0x1639ae,_0x1639ae[_0x3afe0c(0xbb)],_0x1639ae[_0x3afe0c(0xbb)],_0x35c041),_0x2c9a4c=getSupportedFormat(_0x1639ae,_0x1639ae[_0x3afe0c(0xbb)],_0x1639ae[_0x3afe0c(0xbb)],_0x35c041),_0x454803=getSupportedFormat(_0x1639ae,_0x1639ae[_0x3afe0c(0xbb)],_0x1639ae[_0x3afe0c(0xbb)],_0x35c041)),{'gl':_0x1639ae,'ext':{'formatRGBA':_0x4dbfc6,'formatRG':_0x2c9a4c,'formatR':_0x454803,'halfFloatTexType':_0x35c041,'supportLinearFiltering':_0x25c6f7}};}function getSupportedFormat(_0x56ca28,_0x30314f,_0x2d84da,_0x219a05){const _0x24e639=_0x59e279;if(!supportRenderTextureFormat(_0x56ca28,_0x30314f,_0x2d84da,_0x219a05))switch(_0x30314f){case _0x56ca28[_0x24e639(0xb3)]:return getSupportedFormat(_0x56ca28,_0x56ca28[_0x24e639(0xed)],_0x56ca28['RG'],_0x219a05);case _0x56ca28[_0x24e639(0xed)]:return getSupportedFormat(_0x56ca28,_0x56ca28['RGBA16F'],_0x56ca28[_0x24e639(0xbb)],_0x219a05);default:return null;}return{'internalFormat':_0x30314f,'format':_0x2d84da};}function supportRenderTextureFormat(_0x36ad77,_0x5302ce,_0x14e706,_0x143014){const _0x57a4b4=_0x59e279;let _0xf17d61=_0x36ad77['createTexture']();_0x36ad77['bindTexture'](_0x36ad77[_0x57a4b4(0x13a)],_0xf17d61),_0x36ad77['texParameteri'](_0x36ad77[_0x57a4b4(0x13a)],_0x36ad77[_0x57a4b4(0x121)],_0x36ad77[_0x57a4b4(0x110)]),_0x36ad77[_0x57a4b4(0x102)](_0x36ad77['TEXTURE_2D'],_0x36ad77[_0x57a4b4(0x10a)],_0x36ad77[_0x57a4b4(0x110)]),_0x36ad77[_0x57a4b4(0x102)](_0x36ad77[_0x57a4b4(0x13a)],_0x36ad77[_0x57a4b4(0x11b)],_0x36ad77[_0x57a4b4(0x11c)]),_0x36ad77[_0x57a4b4(0x102)](_0x36ad77[_0x57a4b4(0x13a)],_0x36ad77[_0x57a4b4(0x10c)],_0x36ad77[_0x57a4b4(0x11c)]),_0x36ad77[_0x57a4b4(0x133)](_0x36ad77[_0x57a4b4(0x13a)],0x0,_0x5302ce,0x4,0x4,0x0,_0x14e706,_0x143014,null);let _0x1d1dfc=_0x36ad77[_0x57a4b4(0xb6)]();_0x36ad77[_0x57a4b4(0x142)](_0x36ad77['FRAMEBUFFER'],_0x1d1dfc),_0x36ad77[_0x57a4b4(0xf8)](_0x36ad77[_0x57a4b4(0xd4)],_0x36ad77[_0x57a4b4(0x12e)],_0x36ad77[_0x57a4b4(0x13a)],_0xf17d61,0x0);const _0x123175=_0x36ad77[_0x57a4b4(0xbe)](_0x36ad77[_0x57a4b4(0xd4)]);if(_0x123175!=_0x36ad77[_0x57a4b4(0x139)])return![];return!![];}function pointerPrototype(){const _0x100cea=_0x59e279;this['id']=-0x1,this['x']=0x0,this['y']=0x0,this['dx']=0x0,this['dy']=0x0,this[_0x100cea(0xc2)]=![],this[_0x100cea(0x12c)]=![],this['color']=[0x1e,0x0,0x12c];}pointers[_0x59e279(0xd5)](new pointerPrototype());class GLProgram{constructor(_0x3baceb,_0x47ad19){const _0xc70ee2=_0x59e279;this[_0xc70ee2(0xe4)]={},this[_0xc70ee2(0xde)]=gl[_0xc70ee2(0x13d)](),gl[_0xc70ee2(0xd6)](this[_0xc70ee2(0xde)],_0x3baceb),gl[_0xc70ee2(0xd6)](this[_0xc70ee2(0xde)],_0x47ad19),gl['linkProgram'](this[_0xc70ee2(0xde)]);if(!gl[_0xc70ee2(0xcc)](this[_0xc70ee2(0xde)],gl[_0xc70ee2(0xb5)]))throw gl[_0xc70ee2(0x123)](this['program']);const _0x20c33b=gl[_0xc70ee2(0xcc)](this[_0xc70ee2(0xde)],gl['ACTIVE_UNIFORMS']);for(let _0x273145=0x0;_0x273145<_0x20c33b;_0x273145++){const _0x546bef=gl[_0xc70ee2(0x119)](this['program'],_0x273145)[_0xc70ee2(0x11a)];this['uniforms'][_0x546bef]=gl['getUniformLocation'](this[_0xc70ee2(0xde)],_0x546bef);}}[_0x59e279(0xb4)](){const _0x55eb66=_0x59e279;gl[_0x55eb66(0xfd)](this[_0x55eb66(0xde)]);}}function compileShader(_0x5cc0ed,_0x339b75){const _0x1856fe=_0x59e279,_0x572001=gl[_0x1856fe(0xff)](_0x5cc0ed);gl[_0x1856fe(0xfe)](_0x572001,_0x339b75),gl['compileShader'](_0x572001);if(!gl[_0x1856fe(0x12b)](_0x572001,gl[_0x1856fe(0xbc)]))throw gl[_0x1856fe(0xc5)](_0x572001);return _0x572001;};const baseVertexShader=compileShader(gl[_0x59e279(0x135)],_0x59e279(0xe3)),clearShader=compileShader(gl[_0x59e279(0x124)],_0x59e279(0xf5)),displayShader=compileShader(gl['FRAGMENT_SHADER'],_0x59e279(0x12f)),splatShader=compileShader(gl['FRAGMENT_SHADER'],_0x59e279(0x13c)),advectionManualFilteringShader=compileShader(gl[_0x59e279(0x124)],_0x59e279(0x10f)),advectionShader=compileShader(gl[_0x59e279(0x124)],_0x59e279(0xdc)),divergenceShader=compileShader(gl['FRAGMENT_SHADER'],'\x0a\x20\x20\x20\x20precision\x20highp\x20float;\x0a\x20\x20\x20\x20precision\x20mediump\x20sampler2D;\x0a\x0a\x20\x20\x20\x20varying\x20vec2\x20vUv;\x0a\x20\x20\x20\x20varying\x20vec2\x20vL;\x0a\x20\x20\x20\x20varying\x20vec2\x20vR;\x0a\x20\x20\x20\x20varying\x20vec2\x20vT;\x0a\x20\x20\x20\x20varying\x20vec2\x20vB;\x0a\x20\x20\x20\x20uniform\x20sampler2D\x20uVelocity;\x0a\x0a\x20\x20\x20\x20vec2\x20sampleVelocity\x20(in\x20vec2\x20uv)\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20vec2\x20multiplier\x20=\x20vec2(1.0,\x201.0);\x0a\x20\x20\x20\x20\x20\x20\x20\x20if\x20(uv.x\x20<\x200.0)\x20{\x20uv.x\x20=\x200.0;\x20multiplier.x\x20=\x20-1.0;\x20}\x0a\x20\x20\x20\x20\x20\x20\x20\x20if\x20(uv.x\x20>\x201.0)\x20{\x20uv.x\x20=\x201.0;\x20multiplier.x\x20=\x20-1.0;\x20}\x0a\x20\x20\x20\x20\x20\x20\x20\x20if\x20(uv.y\x20<\x200.0)\x20{\x20uv.y\x20=\x200.0;\x20multiplier.y\x20=\x20-1.0;\x20}\x0a\x20\x20\x20\x20\x20\x20\x20\x20if\x20(uv.y\x20>\x201.0)\x20{\x20uv.y\x20=\x201.0;\x20multiplier.y\x20=\x20-1.0;\x20}\x0a\x20\x20\x20\x20\x20\x20\x20\x20return\x20multiplier\x20*\x20texture2D(uVelocity,\x20uv).xy;\x0a\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20void\x20main\x20()\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20float\x20L\x20=\x20sampleVelocity(vL).x;\x0a\x20\x20\x20\x20\x20\x20\x20\x20float\x20R\x20=\x20sampleVelocity(vR).x;\x0a\x20\x20\x20\x20\x20\x20\x20\x20float\x20T\x20=\x20sampleVelocity(vT).y;\x0a\x20\x20\x20\x20\x20\x20\x20\x20float\x20B\x20=\x20sampleVelocity(vB).y;\x0a\x20\x20\x20\x20\x20\x20\x20\x20float\x20div\x20=\x200.5\x20*\x20(R\x20-\x20L\x20+\x20T\x20-\x20B);\x0a\x20\x20\x20\x20\x20\x20\x20\x20gl_FragColor\x20=\x20vec4(div,\x200.0,\x200.0,\x201.0);\x0a\x20\x20\x20\x20}\x0a'),curlShader=compileShader(gl['FRAGMENT_SHADER'],_0x59e279(0x13f)),vorticityShader=compileShader(gl['FRAGMENT_SHADER'],_0x59e279(0xe1)),pressureShader=compileShader(gl[_0x59e279(0x124)],_0x59e279(0xf7)),gradientSubtractShader=compileShader(gl[_0x59e279(0x124)],'\x0a\x20\x20\x20\x20precision\x20highp\x20float;\x0a\x20\x20\x20\x20precision\x20mediump\x20sampler2D;\x0a\x0a\x20\x20\x20\x20varying\x20vec2\x20vUv;\x0a\x20\x20\x20\x20varying\x20vec2\x20vL;\x0a\x20\x20\x20\x20varying\x20vec2\x20vR;\x0a\x20\x20\x20\x20varying\x20vec2\x20vT;\x0a\x20\x20\x20\x20varying\x20vec2\x20vB;\x0a\x20\x20\x20\x20uniform\x20sampler2D\x20uPressure;\x0a\x20\x20\x20\x20uniform\x20sampler2D\x20uVelocity;\x0a\x0a\x20\x20\x20\x20vec2\x20boundary\x20(in\x20vec2\x20uv)\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20uv\x20=\x20min(max(uv,\x200.0),\x201.0);\x0a\x20\x20\x20\x20\x20\x20\x20\x20return\x20uv;\x0a\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20void\x20main\x20()\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20float\x20L\x20=\x20texture2D(uPressure,\x20boundary(vL)).x;\x0a\x20\x20\x20\x20\x20\x20\x20\x20float\x20R\x20=\x20texture2D(uPressure,\x20boundary(vR)).x;\x0a\x20\x20\x20\x20\x20\x20\x20\x20float\x20T\x20=\x20texture2D(uPressure,\x20boundary(vT)).x;\x0a\x20\x20\x20\x20\x20\x20\x20\x20float\x20B\x20=\x20texture2D(uPressure,\x20boundary(vB)).x;\x0a\x20\x20\x20\x20\x20\x20\x20\x20vec2\x20velocity\x20=\x20texture2D(uVelocity,\x20vUv).xy;\x0a\x20\x20\x20\x20\x20\x20\x20\x20velocity.xy\x20-=\x20vec2(R\x20-\x20L,\x20T\x20-\x20B);\x0a\x20\x20\x20\x20\x20\x20\x20\x20gl_FragColor\x20=\x20vec4(velocity,\x200.0,\x201.0);\x0a\x20\x20\x20\x20}\x0a');let textureWidth,textureHeight,density,velocity,divergence,curl,pressure;initFramebuffers();const clearProgram=new GLProgram(baseVertexShader,clearShader),displayProgram=new GLProgram(baseVertexShader,displayShader),splatProgram=new GLProgram(baseVertexShader,splatShader),advectionProgram=new GLProgram(baseVertexShader,ext[_0x59e279(0x112)]?advectionShader:advectionManualFilteringShader),divergenceProgram=new GLProgram(baseVertexShader,divergenceShader),curlProgram=new GLProgram(baseVertexShader,curlShader),vorticityProgram=new GLProgram(baseVertexShader,vorticityShader),pressureProgram=new GLProgram(baseVertexShader,pressureShader),gradienSubtractProgram=new GLProgram(baseVertexShader,gradientSubtractShader);function initFramebuffers(){const _0xa9e759=_0x59e279;textureWidth=gl['drawingBufferWidth']>>config[_0xa9e759(0x11e)],textureHeight=gl[_0xa9e759(0x120)]>>config[_0xa9e759(0x11e)];const _0x2cdf37=ext[_0xa9e759(0xdf)],_0x16c8fb=ext[_0xa9e759(0x138)],_0xa9b241=ext[_0xa9e759(0xf2)],_0x5851ea=ext['formatR'];density=createDoubleFBO(0x2,textureWidth,textureHeight,_0x16c8fb['internalFormat'],_0x16c8fb[_0xa9e759(0xda)],_0x2cdf37,ext[_0xa9e759(0x112)]?gl[_0xa9e759(0xba)]:gl[_0xa9e759(0x110)]),velocity=createDoubleFBO(0x0,textureWidth,textureHeight,_0xa9b241[_0xa9e759(0xe7)],_0xa9b241[_0xa9e759(0xda)],_0x2cdf37,ext[_0xa9e759(0x112)]?gl[_0xa9e759(0xba)]:gl[_0xa9e759(0x110)]),divergence=createFBO(0x4,textureWidth,textureHeight,_0x5851ea[_0xa9e759(0xe7)],_0x5851ea['format'],_0x2cdf37,gl['NEAREST']),curl=createFBO(0x5,textureWidth,textureHeight,_0x5851ea[_0xa9e759(0xe7)],_0x5851ea['format'],_0x2cdf37,gl[_0xa9e759(0x110)]),pressure=createDoubleFBO(0x6,textureWidth,textureHeight,_0x5851ea[_0xa9e759(0xe7)],_0x5851ea[_0xa9e759(0xda)],_0x2cdf37,gl[_0xa9e759(0x110)]);}function createFBO(_0x37f7c2,_0x4aa9fc,_0xb7c838,_0x1885b9,_0x4991ba,_0x57522b,_0x359eec){const _0x5cbc32=_0x59e279;gl[_0x5cbc32(0x12d)](gl[_0x5cbc32(0x11d)]+_0x37f7c2);let _0x11ae33=gl[_0x5cbc32(0xeb)]();gl[_0x5cbc32(0x136)](gl[_0x5cbc32(0x13a)],_0x11ae33),gl[_0x5cbc32(0x102)](gl['TEXTURE_2D'],gl['TEXTURE_MIN_FILTER'],_0x359eec),gl[_0x5cbc32(0x102)](gl[_0x5cbc32(0x13a)],gl[_0x5cbc32(0x10a)],_0x359eec),gl[_0x5cbc32(0x102)](gl['TEXTURE_2D'],gl['TEXTURE_WRAP_S'],gl['CLAMP_TO_EDGE']),gl[_0x5cbc32(0x102)](gl[_0x5cbc32(0x13a)],gl['TEXTURE_WRAP_T'],gl[_0x5cbc32(0x11c)]),gl[_0x5cbc32(0x133)](gl[_0x5cbc32(0x13a)],0x0,_0x1885b9,_0x4aa9fc,_0xb7c838,0x0,_0x4991ba,_0x57522b,null);let _0x444f34=gl[_0x5cbc32(0xb6)]();return gl[_0x5cbc32(0x142)](gl[_0x5cbc32(0xd4)],_0x444f34),gl[_0x5cbc32(0xf8)](gl[_0x5cbc32(0xd4)],gl[_0x5cbc32(0x12e)],gl[_0x5cbc32(0x13a)],_0x11ae33,0x0),gl[_0x5cbc32(0xf3)](0x0,0x0,_0x4aa9fc,_0xb7c838),gl['clear'](gl['COLOR_BUFFER_BIT']),[_0x11ae33,_0x444f34,_0x37f7c2];}function createDoubleFBO(_0x4aafa9,_0x3910b2,_0x3a239b,_0x310229,_0x306d8b,_0x1ffdca,_0x4631bb){let _0x2d8059=createFBO(_0x4aafa9,_0x3910b2,_0x3a239b,_0x310229,_0x306d8b,_0x1ffdca,_0x4631bb),_0x206c32=createFBO(_0x4aafa9+0x1,_0x3910b2,_0x3a239b,_0x310229,_0x306d8b,_0x1ffdca,_0x4631bb);return{get 'read'(){return _0x2d8059;},get 'write'(){return _0x206c32;},'swap'(){let _0x2ac274=_0x2d8059;_0x2d8059=_0x206c32,_0x206c32=_0x2ac274;}};}function _0x1dc7(_0x3b6f0b,_0x5499b9){const _0x5a7f5d=_0x5a7f();return _0x1dc7=function(_0x1dc77f,_0x14e0d8){_0x1dc77f=_0x1dc77f-0xb3;let _0x48e95f=_0x5a7f5d[_0x1dc77f];return _0x48e95f;},_0x1dc7(_0x3b6f0b,_0x5499b9);}const blit=((()=>{const _0x4c1bf0=_0x59e279;return gl[_0x4c1bf0(0x108)](gl[_0x4c1bf0(0xf1)],gl[_0x4c1bf0(0xd1)]()),gl[_0x4c1bf0(0x144)](gl[_0x4c1bf0(0xf1)],new Float32Array([-0x1,-0x1,-0x1,0x1,0x1,0x1,0x1,-0x1]),gl[_0x4c1bf0(0xd2)]),gl[_0x4c1bf0(0x108)](gl[_0x4c1bf0(0x11f)],gl[_0x4c1bf0(0xd1)]()),gl[_0x4c1bf0(0x144)](gl[_0x4c1bf0(0x11f)],new Uint16Array([0x0,0x1,0x2,0x0,0x2,0x3]),gl[_0x4c1bf0(0xd2)]),gl[_0x4c1bf0(0x129)](0x0,0x2,gl[_0x4c1bf0(0xfc)],![],0x0,0x0),gl[_0x4c1bf0(0x114)](0x0),_0x418b34=>{const _0x216a41=_0x4c1bf0;gl[_0x216a41(0x142)](gl[_0x216a41(0xd4)],_0x418b34),gl[_0x216a41(0xca)](gl[_0x216a41(0xcb)],0x6,gl[_0x216a41(0xb7)],0x0);};})());let lastTime=Date[_0x59e279(0xd8)]();multipleSplats(parseInt(Math['random']()*0x14)+0x5),update();function _0x5a7f(){const _0x1b3e52=['Hi\x20there!\x20I\x27m\x20Helitha.','1644056HFowYu','uTexture','down','curl','OES_texture_half_float','getShaderInfoLog','PRESSURE_ITERATIONS','VELOCITY_DISSIPATION','length','uTarget','drawElements','TRIANGLES','getProgramParameter','identifier','width','getElementsByTagName','color','createBuffer','STATIC_DRAW','uniform1i','FRAMEBUFFER','push','attachShader','offsetY','now','uniform3f','format','DENSITY_DISSIPATION','\x0a\x20\x20\x20\x20precision\x20highp\x20float;\x0a\x20\x20\x20\x20precision\x20mediump\x20sampler2D;\x0a\x0a\x20\x20\x20\x20varying\x20vec2\x20vUv;\x0a\x20\x20\x20\x20uniform\x20sampler2D\x20uVelocity;\x0a\x20\x20\x20\x20uniform\x20sampler2D\x20uSource;\x0a\x20\x20\x20\x20uniform\x20vec2\x20texelSize;\x0a\x20\x20\x20\x20uniform\x20float\x20dt;\x0a\x20\x20\x20\x20uniform\x20float\x20dissipation;\x0a\x0a\x20\x20\x20\x20void\x20main\x20()\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20vec2\x20coord\x20=\x20vUv\x20-\x20dt\x20*\x20texture2D(uVelocity,\x20vUv).xy\x20*\x20texelSize;\x0a\x20\x20\x20\x20\x20\x20\x20\x20gl_FragColor\x20=\x20dissipation\x20*\x20texture2D(uSource,\x20coord);\x0a\x20\x20\x20\x20\x20\x20\x20\x20gl_FragColor.a\x20=\x201.0;\x0a\x20\x20\x20\x20}\x0a','I\x27m\x20a\x20Developer.','program','halfFloatTexType','uSource','\x0a\x20\x20\x20\x20precision\x20highp\x20float;\x0a\x20\x20\x20\x20precision\x20mediump\x20sampler2D;\x0a\x0a\x20\x20\x20\x20varying\x20vec2\x20vUv;\x0a\x20\x20\x20\x20varying\x20vec2\x20vT;\x0a\x20\x20\x20\x20varying\x20vec2\x20vB;\x0a\x20\x20\x20\x20uniform\x20sampler2D\x20uVelocity;\x0a\x20\x20\x20\x20uniform\x20sampler2D\x20uCurl;\x0a\x20\x20\x20\x20uniform\x20float\x20curl;\x0a\x20\x20\x20\x20uniform\x20float\x20dt;\x0a\x0a\x20\x20\x20\x20void\x20main\x20()\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20float\x20T\x20=\x20texture2D(uCurl,\x20vT).x;\x0a\x20\x20\x20\x20\x20\x20\x20\x20float\x20B\x20=\x20texture2D(uCurl,\x20vB).x;\x0a\x20\x20\x20\x20\x20\x20\x20\x20float\x20C\x20=\x20texture2D(uCurl,\x20vUv).x;\x0a\x20\x20\x20\x20\x20\x20\x20\x20vec2\x20force\x20=\x20vec2(abs(T)\x20-\x20abs(B),\x200.0);\x0a\x20\x20\x20\x20\x20\x20\x20\x20force\x20*=\x201.0\x20/\x20length(force\x20+\x200.00001)\x20*\x20curl\x20*\x20C;\x0a\x20\x20\x20\x20\x20\x20\x20\x20vec2\x20vel\x20=\x20texture2D(uVelocity,\x20vUv).xy;\x0a\x20\x20\x20\x20\x20\x20\x20\x20gl_FragColor\x20=\x20vec4(vel\x20+\x20force\x20*\x20dt,\x200.0,\x201.0);\x0a\x20\x20\x20\x20}\x0a','clientWidth','\x0a\x20\x20\x20\x20precision\x20highp\x20float;\x0a\x20\x20\x20\x20precision\x20mediump\x20sampler2D;\x0a\x0a\x20\x20\x20\x20attribute\x20vec2\x20aPosition;\x0a\x20\x20\x20\x20varying\x20vec2\x20vUv;\x0a\x20\x20\x20\x20varying\x20vec2\x20vL;\x0a\x20\x20\x20\x20varying\x20vec2\x20vR;\x0a\x20\x20\x20\x20varying\x20vec2\x20vT;\x0a\x20\x20\x20\x20varying\x20vec2\x20vB;\x0a\x20\x20\x20\x20uniform\x20vec2\x20texelSize;\x0a\x0a\x20\x20\x20\x20void\x20main\x20()\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20vUv\x20=\x20aPosition\x20*\x200.5\x20+\x200.5;\x0a\x20\x20\x20\x20\x20\x20\x20\x20vL\x20=\x20vUv\x20-\x20vec2(texelSize.x,\x200.0);\x0a\x20\x20\x20\x20\x20\x20\x20\x20vR\x20=\x20vUv\x20+\x20vec2(texelSize.x,\x200.0);\x0a\x20\x20\x20\x20\x20\x20\x20\x20vT\x20=\x20vUv\x20+\x20vec2(0.0,\x20texelSize.y);\x0a\x20\x20\x20\x20\x20\x20\x20\x20vB\x20=\x20vUv\x20-\x20vec2(0.0,\x20texelSize.y);\x0a\x20\x20\x20\x20\x20\x20\x20\x20gl_Position\x20=\x20vec4(aPosition,\x200.0,\x201.0);\x0a\x20\x20\x20\x20}\x0a','uniforms','368032ULNcyc','mousemove','internalFormat','webgl2','pop','touchmove','createTexture','addEventListener','RG16F','experimental-webgl','preventDefault','RED','ARRAY_BUFFER','formatRG','viewport','HALF_FLOAT','\x0a\x20\x20\x20\x20precision\x20highp\x20float;\x0a\x20\x20\x20\x20precision\x20mediump\x20sampler2D;\x0a\x0a\x20\x20\x20\x20varying\x20vec2\x20vUv;\x0a\x20\x20\x20\x20uniform\x20sampler2D\x20uTexture;\x0a\x20\x20\x20\x20uniform\x20float\x20value;\x0a\x0a\x20\x20\x20\x20void\x20main\x20()\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20gl_FragColor\x20=\x20value\x20*\x20texture2D(uTexture,\x20vUv);\x0a\x20\x20\x20\x20}\x0a','RGBA16F','\x0a\x20\x20\x20\x20precision\x20highp\x20float;\x0a\x20\x20\x20\x20precision\x20mediump\x20sampler2D;\x0a\x0a\x20\x20\x20\x20varying\x20vec2\x20vUv;\x0a\x20\x20\x20\x20varying\x20vec2\x20vL;\x0a\x20\x20\x20\x20varying\x20vec2\x20vR;\x0a\x20\x20\x20\x20varying\x20vec2\x20vT;\x0a\x20\x20\x20\x20varying\x20vec2\x20vB;\x0a\x20\x20\x20\x20uniform\x20sampler2D\x20uPressure;\x0a\x20\x20\x20\x20uniform\x20sampler2D\x20uDivergence;\x0a\x0a\x20\x20\x20\x20vec2\x20boundary\x20(in\x20vec2\x20uv)\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20uv\x20=\x20min(max(uv,\x200.0),\x201.0);\x0a\x20\x20\x20\x20\x20\x20\x20\x20return\x20uv;\x0a\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20void\x20main\x20()\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20float\x20L\x20=\x20texture2D(uPressure,\x20boundary(vL)).x;\x0a\x20\x20\x20\x20\x20\x20\x20\x20float\x20R\x20=\x20texture2D(uPressure,\x20boundary(vR)).x;\x0a\x20\x20\x20\x20\x20\x20\x20\x20float\x20T\x20=\x20texture2D(uPressure,\x20boundary(vT)).x;\x0a\x20\x20\x20\x20\x20\x20\x20\x20float\x20B\x20=\x20texture2D(uPressure,\x20boundary(vB)).x;\x0a\x20\x20\x20\x20\x20\x20\x20\x20float\x20C\x20=\x20texture2D(uPressure,\x20vUv).x;\x0a\x20\x20\x20\x20\x20\x20\x20\x20float\x20divergence\x20=\x20texture2D(uDivergence,\x20vUv).x;\x0a\x20\x20\x20\x20\x20\x20\x20\x20float\x20pressure\x20=\x20(L\x20+\x20R\x20+\x20B\x20+\x20T\x20-\x20divergence)\x20*\x200.25;\x0a\x20\x20\x20\x20\x20\x20\x20\x20gl_FragColor\x20=\x20vec4(pressure,\x200.0,\x200.0,\x201.0);\x0a\x20\x20\x20\x20}\x0a','framebufferTexture2D','point','getContext','3380420RjgwvZ','FLOAT','useProgram','shaderSource','createShader','dissipation','clearColor','texParameteri','touchend','swap','SPLAT_RADIUS','getExtension','pageX','bindBuffer','read','TEXTURE_MAG_FILTER','OES_texture_float_linear','TEXTURE_WRAP_T','clientHeight','uPressure','\x0a\x20\x20\x20\x20precision\x20highp\x20float;\x0a\x20\x20\x20\x20precision\x20mediump\x20sampler2D;\x0a\x0a\x20\x20\x20\x20varying\x20vec2\x20vUv;\x0a\x20\x20\x20\x20uniform\x20sampler2D\x20uVelocity;\x0a\x20\x20\x20\x20uniform\x20sampler2D\x20uSource;\x0a\x20\x20\x20\x20uniform\x20vec2\x20texelSize;\x0a\x20\x20\x20\x20uniform\x20float\x20dt;\x0a\x20\x20\x20\x20uniform\x20float\x20dissipation;\x0a\x0a\x20\x20\x20\x20vec4\x20bilerp\x20(in\x20sampler2D\x20sam,\x20in\x20vec2\x20p)\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20vec4\x20st;\x0a\x20\x20\x20\x20\x20\x20\x20\x20st.xy\x20=\x20floor(p\x20-\x200.5)\x20+\x200.5;\x0a\x20\x20\x20\x20\x20\x20\x20\x20st.zw\x20=\x20st.xy\x20+\x201.0;\x0a\x20\x20\x20\x20\x20\x20\x20\x20vec4\x20uv\x20=\x20st\x20*\x20texelSize.xyxy;\x0a\x20\x20\x20\x20\x20\x20\x20\x20vec4\x20a\x20=\x20texture2D(sam,\x20uv.xy);\x0a\x20\x20\x20\x20\x20\x20\x20\x20vec4\x20b\x20=\x20texture2D(sam,\x20uv.zy);\x0a\x20\x20\x20\x20\x20\x20\x20\x20vec4\x20c\x20=\x20texture2D(sam,\x20uv.xw);\x0a\x20\x20\x20\x20\x20\x20\x20\x20vec4\x20d\x20=\x20texture2D(sam,\x20uv.zw);\x0a\x20\x20\x20\x20\x20\x20\x20\x20vec2\x20f\x20=\x20p\x20-\x20st.xy;\x0a\x20\x20\x20\x20\x20\x20\x20\x20return\x20mix(mix(a,\x20b,\x20f.x),\x20mix(c,\x20d,\x20f.x),\x20f.y);\x0a\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20void\x20main\x20()\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20vec2\x20coord\x20=\x20gl_FragCoord.xy\x20-\x20dt\x20*\x20texture2D(uVelocity,\x20vUv).xy;\x0a\x20\x20\x20\x20\x20\x20\x20\x20gl_FragColor\x20=\x20dissipation\x20*\x20bilerp(uSource,\x20coord);\x0a\x20\x20\x20\x20\x20\x20\x20\x20gl_FragColor.a\x20=\x201.0;\x0a\x20\x20\x20\x20}\x0a','NEAREST','uniform2f','supportLinearFiltering','aspectRatio','enableVertexAttribArray','height','7qnicKk','7024200pXkyfh','random','getActiveUniform','name','TEXTURE_WRAP_S','CLAMP_TO_EDGE','TEXTURE0','TEXTURE_DOWNSAMPLE','ELEMENT_ARRAY_BUFFER','drawingBufferHeight','TEXTURE_MIN_FILTER','I\x27m\x20a\x20Designer.','getProgramInfoLog','FRAGMENT_SHADER','radius','uniform1f','changedTouches','2024218XJLCfM','vertexAttribPointer','write','getShaderParameter','moved','activeTexture','COLOR_ATTACHMENT0','\x0a\x20\x20\x20\x20precision\x20highp\x20float;\x0a\x20\x20\x20\x20precision\x20mediump\x20sampler2D;\x0a\x0a\x20\x20\x20\x20varying\x20vec2\x20vUv;\x0a\x20\x20\x20\x20uniform\x20sampler2D\x20uTexture;\x0a\x0a\x20\x20\x20\x20void\x20main\x20()\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20gl_FragColor\x20=\x20texture2D(uTexture,\x20vUv);\x0a\x20\x20\x20\x20}\x0a','offsetX','pageY','HALF_FLOAT_OES','texImage2D','min','VERTEX_SHADER','bindTexture','7454312CcgWpL','formatRGBA','FRAMEBUFFER_COMPLETE','TEXTURE_2D','uCurl','\x0a\x20\x20\x20\x20precision\x20highp\x20float;\x0a\x20\x20\x20\x20precision\x20mediump\x20sampler2D;\x0a\x0a\x20\x20\x20\x20varying\x20vec2\x20vUv;\x0a\x20\x20\x20\x20uniform\x20sampler2D\x20uTarget;\x0a\x20\x20\x20\x20uniform\x20float\x20aspectRatio;\x0a\x20\x20\x20\x20uniform\x20vec3\x20color;\x0a\x20\x20\x20\x20uniform\x20vec2\x20point;\x0a\x20\x20\x20\x20uniform\x20float\x20radius;\x0a\x0a\x20\x20\x20\x20void\x20main\x20()\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20vec2\x20p\x20=\x20vUv\x20-\x20point.xy;\x0a\x20\x20\x20\x20\x20\x20\x20\x20p.x\x20*=\x20aspectRatio;\x0a\x20\x20\x20\x20\x20\x20\x20\x20vec3\x20splat\x20=\x20exp(-dot(p,\x20p)\x20/\x20radius)\x20*\x20color;\x0a\x20\x20\x20\x20\x20\x20\x20\x20vec3\x20base\x20=\x20texture2D(uTarget,\x20vUv).xyz;\x0a\x20\x20\x20\x20\x20\x20\x20\x20gl_FragColor\x20=\x20vec4(base\x20+\x20splat,\x201.0);\x0a\x20\x20\x20\x20}\x0a','createProgram','value','\x0a\x20\x20\x20\x20precision\x20highp\x20float;\x0a\x20\x20\x20\x20precision\x20mediump\x20sampler2D;\x0a\x0a\x20\x20\x20\x20varying\x20vec2\x20vUv;\x0a\x20\x20\x20\x20varying\x20vec2\x20vL;\x0a\x20\x20\x20\x20varying\x20vec2\x20vR;\x0a\x20\x20\x20\x20varying\x20vec2\x20vT;\x0a\x20\x20\x20\x20varying\x20vec2\x20vB;\x0a\x20\x20\x20\x20uniform\x20sampler2D\x20uVelocity;\x0a\x0a\x20\x20\x20\x20void\x20main\x20()\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20float\x20L\x20=\x20texture2D(uVelocity,\x20vL).y;\x0a\x20\x20\x20\x20\x20\x20\x20\x20float\x20R\x20=\x20texture2D(uVelocity,\x20vR).y;\x0a\x20\x20\x20\x20\x20\x20\x20\x20float\x20T\x20=\x20texture2D(uVelocity,\x20vT).x;\x0a\x20\x20\x20\x20\x20\x20\x20\x20float\x20B\x20=\x20texture2D(uVelocity,\x20vB).x;\x0a\x20\x20\x20\x20\x20\x20\x20\x20float\x20vorticity\x20=\x20R\x20-\x20L\x20-\x20T\x20+\x20B;\x0a\x20\x20\x20\x20\x20\x20\x20\x20gl_FragColor\x20=\x20vec4(vorticity,\x200.0,\x200.0,\x201.0);\x0a\x20\x20\x20\x20}\x0a','uVelocity','webgl','bindFramebuffer','drawingBufferWidth','bufferData','R16F','bind','LINK_STATUS','createFramebuffer','UNSIGNED_SHORT','targetTouches','5473422BUWUuQ','LINEAR','RGBA','COMPILE_STATUS','texelSize','checkFramebufferStatus'];_0x5a7f=function(){return _0x1b3e52;};return _0x5a7f();}function update(){const _0xf21c80=_0x59e279;resizeCanvas();const _0x1e4ef3=Math[_0xf21c80(0x134)]((Date['now']()-lastTime)/0x3e8,0.016);lastTime=Date['now'](),gl[_0xf21c80(0xf3)](0x0,0x0,textureWidth,textureHeight);if(splatStack[_0xf21c80(0xc8)]>0x0)multipleSplats(splatStack[_0xf21c80(0xe9)]());advectionProgram[_0xf21c80(0xb4)](),gl['uniform2f'](advectionProgram['uniforms']['texelSize'],0x1/textureWidth,0x1/textureHeight),gl[_0xf21c80(0xd3)](advectionProgram[_0xf21c80(0xe4)][_0xf21c80(0x140)],velocity['read'][0x2]),gl[_0xf21c80(0xd3)](advectionProgram[_0xf21c80(0xe4)]['uSource'],velocity[_0xf21c80(0x109)][0x2]),gl[_0xf21c80(0x126)](advectionProgram[_0xf21c80(0xe4)]['dt'],_0x1e4ef3),gl['uniform1f'](advectionProgram[_0xf21c80(0xe4)][_0xf21c80(0x100)],config[_0xf21c80(0xc7)]),blit(velocity['write'][0x1]),velocity[_0xf21c80(0x104)](),gl[_0xf21c80(0xd3)](advectionProgram[_0xf21c80(0xe4)][_0xf21c80(0x140)],velocity['read'][0x2]),gl[_0xf21c80(0xd3)](advectionProgram[_0xf21c80(0xe4)][_0xf21c80(0xe0)],density[_0xf21c80(0x109)][0x2]),gl['uniform1f'](advectionProgram[_0xf21c80(0xe4)][_0xf21c80(0x100)],config[_0xf21c80(0xdb)]),blit(density[_0xf21c80(0x12a)][0x1]),density[_0xf21c80(0x104)]();for(let _0x4facd3=0x0;_0x4facd3<pointers[_0xf21c80(0xc8)];_0x4facd3++){const _0x19b085=pointers[_0x4facd3];_0x19b085[_0xf21c80(0x12c)]&&(splat(_0x19b085['x'],_0x19b085['y'],_0x19b085['dx'],_0x19b085['dy'],_0x19b085[_0xf21c80(0xd0)]),_0x19b085[_0xf21c80(0x12c)]=![]);}curlProgram[_0xf21c80(0xb4)](),gl[_0xf21c80(0x111)](curlProgram[_0xf21c80(0xe4)]['texelSize'],0x1/textureWidth,0x1/textureHeight),gl[_0xf21c80(0xd3)](curlProgram['uniforms'][_0xf21c80(0x140)],velocity[_0xf21c80(0x109)][0x2]),blit(curl[0x1]),vorticityProgram[_0xf21c80(0xb4)](),gl[_0xf21c80(0x111)](vorticityProgram[_0xf21c80(0xe4)][_0xf21c80(0xbd)],0x1/textureWidth,0x1/textureHeight),gl[_0xf21c80(0xd3)](vorticityProgram[_0xf21c80(0xe4)][_0xf21c80(0x140)],velocity[_0xf21c80(0x109)][0x2]),gl[_0xf21c80(0xd3)](vorticityProgram[_0xf21c80(0xe4)][_0xf21c80(0x13b)],curl[0x2]),gl[_0xf21c80(0x126)](vorticityProgram[_0xf21c80(0xe4)][_0xf21c80(0xc3)],config['CURL']),gl[_0xf21c80(0x126)](vorticityProgram['uniforms']['dt'],_0x1e4ef3),blit(velocity[_0xf21c80(0x12a)][0x1]),velocity['swap'](),divergenceProgram[_0xf21c80(0xb4)](),gl[_0xf21c80(0x111)](divergenceProgram[_0xf21c80(0xe4)][_0xf21c80(0xbd)],0x1/textureWidth,0x1/textureHeight),gl['uniform1i'](divergenceProgram[_0xf21c80(0xe4)][_0xf21c80(0x140)],velocity['read'][0x2]),blit(divergence[0x1]),clearProgram[_0xf21c80(0xb4)]();let _0x32e4d5=pressure['read'][0x2];gl[_0xf21c80(0x12d)](gl['TEXTURE0']+_0x32e4d5),gl['bindTexture'](gl[_0xf21c80(0x13a)],pressure[_0xf21c80(0x109)][0x0]),gl[_0xf21c80(0xd3)](clearProgram[_0xf21c80(0xe4)][_0xf21c80(0xc1)],_0x32e4d5),gl['uniform1f'](clearProgram['uniforms'][_0xf21c80(0x13e)],config['PRESSURE_DISSIPATION']),blit(pressure['write'][0x1]),pressure['swap'](),pressureProgram[_0xf21c80(0xb4)](),gl[_0xf21c80(0x111)](pressureProgram[_0xf21c80(0xe4)]['texelSize'],0x1/textureWidth,0x1/textureHeight),gl['uniform1i'](pressureProgram[_0xf21c80(0xe4)]['uDivergence'],divergence[0x2]),_0x32e4d5=pressure['read'][0x2],gl['uniform1i'](pressureProgram[_0xf21c80(0xe4)][_0xf21c80(0x10e)],_0x32e4d5),gl[_0xf21c80(0x12d)](gl[_0xf21c80(0x11d)]+_0x32e4d5);for(let _0x130163=0x0;_0x130163<config[_0xf21c80(0xc6)];_0x130163++){gl[_0xf21c80(0x136)](gl[_0xf21c80(0x13a)],pressure[_0xf21c80(0x109)][0x0]),blit(pressure['write'][0x1]),pressure[_0xf21c80(0x104)]();}gradienSubtractProgram[_0xf21c80(0xb4)](),gl[_0xf21c80(0x111)](gradienSubtractProgram[_0xf21c80(0xe4)][_0xf21c80(0xbd)],0x1/textureWidth,0x1/textureHeight),gl['uniform1i'](gradienSubtractProgram[_0xf21c80(0xe4)]['uPressure'],pressure['read'][0x2]),gl[_0xf21c80(0xd3)](gradienSubtractProgram[_0xf21c80(0xe4)]['uVelocity'],velocity[_0xf21c80(0x109)][0x2]),blit(velocity[_0xf21c80(0x12a)][0x1]),velocity[_0xf21c80(0x104)](),gl['viewport'](0x0,0x0,gl[_0xf21c80(0x143)],gl[_0xf21c80(0x120)]),displayProgram[_0xf21c80(0xb4)](),gl[_0xf21c80(0xd3)](displayProgram[_0xf21c80(0xe4)][_0xf21c80(0xc1)],density[_0xf21c80(0x109)][0x2]),blit(null),requestAnimationFrame(update);}function splat(_0x408a1e,_0x5b04e4,_0x3c54bb,_0x29e08e,_0x9ba5d4){const _0x20f402=_0x59e279;splatProgram[_0x20f402(0xb4)](),gl[_0x20f402(0xd3)](splatProgram['uniforms'][_0x20f402(0xc9)],velocity[_0x20f402(0x109)][0x2]),gl['uniform1f'](splatProgram['uniforms'][_0x20f402(0x113)],canvas[_0x20f402(0xce)]/canvas[_0x20f402(0x115)]),gl['uniform2f'](splatProgram[_0x20f402(0xe4)][_0x20f402(0xf9)],_0x408a1e/canvas[_0x20f402(0xce)],0x1-_0x5b04e4/canvas[_0x20f402(0x115)]),gl[_0x20f402(0xd9)](splatProgram[_0x20f402(0xe4)][_0x20f402(0xd0)],_0x3c54bb,-_0x29e08e,0x1),gl['uniform1f'](splatProgram[_0x20f402(0xe4)][_0x20f402(0x125)],config[_0x20f402(0x105)]),blit(velocity['write'][0x1]),velocity[_0x20f402(0x104)](),gl['uniform1i'](splatProgram[_0x20f402(0xe4)][_0x20f402(0xc9)],density[_0x20f402(0x109)][0x2]),gl['uniform3f'](splatProgram[_0x20f402(0xe4)]['color'],_0x9ba5d4[0x0]*0.3,_0x9ba5d4[0x1]*0.3,_0x9ba5d4[0x2]*0.3),blit(density[_0x20f402(0x12a)][0x1]),density[_0x20f402(0x104)]();}function multipleSplats(_0x3b9c16){const _0x22a7e9=_0x59e279;for(let _0xe73d5e=0x0;_0xe73d5e<_0x3b9c16;_0xe73d5e++){const _0x75e63a=[Math['random']()*0xa,Math['random']()*0xa,Math[_0x22a7e9(0x118)]()*0xa],_0x19125d=canvas[_0x22a7e9(0xce)]*Math[_0x22a7e9(0x118)](),_0x3f0be5=canvas[_0x22a7e9(0x115)]*Math['random'](),_0x41897b=0x3e8*(Math[_0x22a7e9(0x118)]()-0.5),_0x39aa5b=0x3e8*(Math[_0x22a7e9(0x118)]()-0.5);splat(_0x19125d,_0x3f0be5,_0x41897b,_0x39aa5b,_0x75e63a);}}function resizeCanvas(){const _0x4f87ee=_0x59e279;(canvas['width']!=canvas[_0x4f87ee(0xe2)]||canvas['height']!=canvas[_0x4f87ee(0x10d)])&&(canvas['width']=canvas[_0x4f87ee(0xe2)],canvas[_0x4f87ee(0x115)]=canvas[_0x4f87ee(0x10d)],initFramebuffers());}canvas[_0x59e279(0xec)](_0x59e279(0xe6),_0x33217c=>{const _0x1af490=_0x59e279;pointers[0x0][_0x1af490(0x12c)]=pointers[0x0][_0x1af490(0xc2)],pointers[0x0]['dx']=(_0x33217c[_0x1af490(0x130)]-pointers[0x0]['x'])*0xa,pointers[0x0]['dy']=(_0x33217c[_0x1af490(0xd7)]-pointers[0x0]['y'])*0xa,pointers[0x0]['x']=_0x33217c[_0x1af490(0x130)],pointers[0x0]['y']=_0x33217c['offsetY'];}),canvas['addEventListener'](_0x59e279(0xea),_0x55c9d2=>{const _0xb0aaf5=_0x59e279;_0x55c9d2[_0xb0aaf5(0xef)]();const _0x47fa1d=_0x55c9d2['targetTouches'];for(let _0x5ec8eb=0x0;_0x5ec8eb<_0x47fa1d[_0xb0aaf5(0xc8)];_0x5ec8eb++){let _0x297cff=pointers[_0x5ec8eb];_0x297cff[_0xb0aaf5(0x12c)]=_0x297cff['down'],_0x297cff['dx']=(_0x47fa1d[_0x5ec8eb][_0xb0aaf5(0x107)]-_0x297cff['x'])*0xa,_0x297cff['dy']=(_0x47fa1d[_0x5ec8eb][_0xb0aaf5(0x131)]-_0x297cff['y'])*0xa,_0x297cff['x']=_0x47fa1d[_0x5ec8eb]['pageX'],_0x297cff['y']=_0x47fa1d[_0x5ec8eb][_0xb0aaf5(0x131)];}},![]),canvas['addEventListener']('mousedown',()=>{const _0x103bfe=_0x59e279;pointers[0x0][_0x103bfe(0xc2)]=!![],pointers[0x0][_0x103bfe(0xd0)]=[Math['random']()+0.2,Math[_0x103bfe(0x118)]()+0.2,Math[_0x103bfe(0x118)]()+0.2];}),canvas['addEventListener']('touchstart',_0x3fde6f=>{const _0x4598ac=_0x59e279;_0x3fde6f[_0x4598ac(0xef)]();const _0x1ae944=_0x3fde6f[_0x4598ac(0xb8)];for(let _0xd18f05=0x0;_0xd18f05<_0x1ae944[_0x4598ac(0xc8)];_0xd18f05++){if(_0xd18f05>=pointers[_0x4598ac(0xc8)])pointers[_0x4598ac(0xd5)](new pointerPrototype());pointers[_0xd18f05]['id']=_0x1ae944[_0xd18f05][_0x4598ac(0xcd)],pointers[_0xd18f05]['down']=!![],pointers[_0xd18f05]['x']=_0x1ae944[_0xd18f05][_0x4598ac(0x107)],pointers[_0xd18f05]['y']=_0x1ae944[_0xd18f05][_0x4598ac(0x131)],pointers[_0xd18f05]['color']=[Math[_0x4598ac(0x118)]()+0.2,Math[_0x4598ac(0x118)]()+0.2,Math['random']()+0.2];}}),window[_0x59e279(0xec)]('mouseup',()=>{const _0x25ec07=_0x59e279;pointers[0x0][_0x25ec07(0xc2)]=![];}),window[_0x59e279(0xec)](_0x59e279(0x103),_0xd765c8=>{const _0xabfd61=_0x59e279,_0x219b2d=_0xd765c8[_0xabfd61(0x127)];for(let _0x345895=0x0;_0x345895<_0x219b2d[_0xabfd61(0xc8)];_0x345895++)for(let _0x4e98a1=0x0;_0x4e98a1<pointers[_0xabfd61(0xc8)];_0x4e98a1++)if(_0x219b2d[_0x345895][_0xabfd61(0xcd)]==pointers[_0x4e98a1]['id'])pointers[_0x4e98a1]['down']=![];}),document[_0x59e279(0xec)]('DOMContentLoaded',function(_0x18dddf){const _0x1e4c4a=_0x59e279;let _0x3cbcca=new Typed('.typeline',{'strings':[_0x1e4c4a(0xbf),_0x1e4c4a(0xdd),_0x1e4c4a(0x122),'I\x20love\x20building\x20web\x20apps.'],'typeSpeed':0x28,'backSpeed':0x28,'loop':!![]});});
+'use strict';
+
+const canvas = document.getElementsByTagName('canvas')[0];
+canvas.width = canvas.clientWidth;
+canvas.height = canvas.clientHeight;
+
+let config = {
+    TEXTURE_DOWNSAMPLE: 1,
+    DENSITY_DISSIPATION: 0.98,
+    VELOCITY_DISSIPATION: 0.99,
+    PRESSURE_DISSIPATION: 0.8,
+    PRESSURE_ITERATIONS: 25,
+    CURL: 30,
+    SPLAT_RADIUS: 0.005
+}
+
+let pointers = [];
+let splatStack = [];
+
+const  { gl, ext } = getWebGLContext(canvas);
+
+function getWebGLContext (canvas) {
+    const params = { alpha: false, depth: false, stencil: false, antialias: false };
+
+    let gl = canvas.getContext('webgl2', params);
+    const isWebGL2 = !!gl;
+    if (!isWebGL2)
+        gl = canvas.getContext('webgl', params) || canvas.getContext('experimental-webgl', params);
+
+    let halfFloat;
+    let supportLinearFiltering;
+    if (isWebGL2) {
+        gl.getExtension('EXT_color_buffer_float');
+        supportLinearFiltering = gl.getExtension('OES_texture_float_linear');
+    } else {
+        halfFloat = gl.getExtension('OES_texture_half_float');
+        supportLinearFiltering = gl.getExtension('OES_texture_half_float_linear');
+    }
+
+    gl.clearColor(0.0, 0.0, 0.0, 1.0);
+
+    const halfFloatTexType = isWebGL2 ? gl.HALF_FLOAT : halfFloat.HALF_FLOAT_OES;
+    let formatRGBA;
+    let formatRG;
+    let formatR;
+
+    if (isWebGL2)
+    {
+        formatRGBA = getSupportedFormat(gl, gl.RGBA16F, gl.RGBA, halfFloatTexType);
+        formatRG = getSupportedFormat(gl, gl.RG16F, gl.RG, halfFloatTexType);
+        formatR = getSupportedFormat(gl, gl.R16F, gl.RED, halfFloatTexType);
+    }
+    else
+    {
+        formatRGBA = getSupportedFormat(gl, gl.RGBA, gl.RGBA, halfFloatTexType);
+        formatRG = getSupportedFormat(gl, gl.RGBA, gl.RGBA, halfFloatTexType);
+        formatR = getSupportedFormat(gl, gl.RGBA, gl.RGBA, halfFloatTexType);
+    }
+
+    return {
+        gl,
+        ext: {
+            formatRGBA,
+            formatRG,
+            formatR,
+            halfFloatTexType,
+            supportLinearFiltering
+        }
+    };
+}
+
+function getSupportedFormat (gl, internalFormat, format, type)
+{
+    if (!supportRenderTextureFormat(gl, internalFormat, format, type))
+    {
+        switch (internalFormat)
+        {
+            case gl.R16F:
+                return getSupportedFormat(gl, gl.RG16F, gl.RG, type);
+            case gl.RG16F:
+                return getSupportedFormat(gl, gl.RGBA16F, gl.RGBA, type);
+            default:
+                return null;
+        }
+    }
+
+    return {
+        internalFormat,
+        format
+    }
+}
+
+function supportRenderTextureFormat (gl, internalFormat, format, type) {
+    let texture = gl.createTexture();
+    gl.bindTexture(gl.TEXTURE_2D, texture);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    gl.texImage2D(gl.TEXTURE_2D, 0, internalFormat, 4, 4, 0, format, type, null);
+
+    let fbo = gl.createFramebuffer();
+    gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
+    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture, 0);
+
+    const status = gl.checkFramebufferStatus(gl.FRAMEBUFFER);
+    if (status != gl.FRAMEBUFFER_COMPLETE)
+        return false;
+    return true;
+}
+
+function pointerPrototype () {
+    this.id = -1;
+    this.x = 0;
+    this.y = 0;
+    this.dx = 0;
+    this.dy = 0;
+    this.down = false;
+    this.moved = false;
+    this.color = [30, 0, 300];
+}
+
+pointers.push(new pointerPrototype());
+
+class GLProgram {
+    constructor (vertexShader, fragmentShader) {
+        this.uniforms = {};
+        this.program = gl.createProgram();
+
+        gl.attachShader(this.program, vertexShader);
+        gl.attachShader(this.program, fragmentShader);
+        gl.linkProgram(this.program);
+
+        if (!gl.getProgramParameter(this.program, gl.LINK_STATUS))
+            throw gl.getProgramInfoLog(this.program);
+
+        const uniformCount = gl.getProgramParameter(this.program, gl.ACTIVE_UNIFORMS);
+        for (let i = 0; i < uniformCount; i++) {
+            const uniformName = gl.getActiveUniform(this.program, i).name;
+            this.uniforms[uniformName] = gl.getUniformLocation(this.program, uniformName);
+        }
+    }
+
+    bind () {
+        gl.useProgram(this.program);
+    }
+}
+
+function compileShader (type, source) {
+    const shader = gl.createShader(type);
+    gl.shaderSource(shader, source);
+    gl.compileShader(shader);
+
+    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS))
+        throw gl.getShaderInfoLog(shader);
+
+    return shader;
+};
+
+const baseVertexShader = compileShader(gl.VERTEX_SHADER, `
+    precision highp float;
+    precision mediump sampler2D;
+
+    attribute vec2 aPosition;
+    varying vec2 vUv;
+    varying vec2 vL;
+    varying vec2 vR;
+    varying vec2 vT;
+    varying vec2 vB;
+    uniform vec2 texelSize;
+
+    void main () {
+        vUv = aPosition * 0.5 + 0.5;
+        vL = vUv - vec2(texelSize.x, 0.0);
+        vR = vUv + vec2(texelSize.x, 0.0);
+        vT = vUv + vec2(0.0, texelSize.y);
+        vB = vUv - vec2(0.0, texelSize.y);
+        gl_Position = vec4(aPosition, 0.0, 1.0);
+    }
+`);
+
+const clearShader = compileShader(gl.FRAGMENT_SHADER, `
+    precision highp float;
+    precision mediump sampler2D;
+
+    varying vec2 vUv;
+    uniform sampler2D uTexture;
+    uniform float value;
+
+    void main () {
+        gl_FragColor = value * texture2D(uTexture, vUv);
+    }
+`);
+
+const displayShader = compileShader(gl.FRAGMENT_SHADER, `
+    precision highp float;
+    precision mediump sampler2D;
+
+    varying vec2 vUv;
+    uniform sampler2D uTexture;
+
+    void main () {
+        gl_FragColor = texture2D(uTexture, vUv);
+    }
+`);
+
+const splatShader = compileShader(gl.FRAGMENT_SHADER, `
+    precision highp float;
+    precision mediump sampler2D;
+
+    varying vec2 vUv;
+    uniform sampler2D uTarget;
+    uniform float aspectRatio;
+    uniform vec3 color;
+    uniform vec2 point;
+    uniform float radius;
+
+    void main () {
+        vec2 p = vUv - point.xy;
+        p.x *= aspectRatio;
+        vec3 splat = exp(-dot(p, p) / radius) * color;
+        vec3 base = texture2D(uTarget, vUv).xyz;
+        gl_FragColor = vec4(base + splat, 1.0);
+    }
+`);
+
+const advectionManualFilteringShader = compileShader(gl.FRAGMENT_SHADER, `
+    precision highp float;
+    precision mediump sampler2D;
+
+    varying vec2 vUv;
+    uniform sampler2D uVelocity;
+    uniform sampler2D uSource;
+    uniform vec2 texelSize;
+    uniform float dt;
+    uniform float dissipation;
+
+    vec4 bilerp (in sampler2D sam, in vec2 p) {
+        vec4 st;
+        st.xy = floor(p - 0.5) + 0.5;
+        st.zw = st.xy + 1.0;
+        vec4 uv = st * texelSize.xyxy;
+        vec4 a = texture2D(sam, uv.xy);
+        vec4 b = texture2D(sam, uv.zy);
+        vec4 c = texture2D(sam, uv.xw);
+        vec4 d = texture2D(sam, uv.zw);
+        vec2 f = p - st.xy;
+        return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
+    }
+
+    void main () {
+        vec2 coord = gl_FragCoord.xy - dt * texture2D(uVelocity, vUv).xy;
+        gl_FragColor = dissipation * bilerp(uSource, coord);
+        gl_FragColor.a = 1.0;
+    }
+`);
+
+const advectionShader = compileShader(gl.FRAGMENT_SHADER, `
+    precision highp float;
+    precision mediump sampler2D;
+
+    varying vec2 vUv;
+    uniform sampler2D uVelocity;
+    uniform sampler2D uSource;
+    uniform vec2 texelSize;
+    uniform float dt;
+    uniform float dissipation;
+
+    void main () {
+        vec2 coord = vUv - dt * texture2D(uVelocity, vUv).xy * texelSize;
+        gl_FragColor = dissipation * texture2D(uSource, coord);
+        gl_FragColor.a = 1.0;
+    }
+`);
+
+const divergenceShader = compileShader(gl.FRAGMENT_SHADER, `
+    precision highp float;
+    precision mediump sampler2D;
+
+    varying vec2 vUv;
+    varying vec2 vL;
+    varying vec2 vR;
+    varying vec2 vT;
+    varying vec2 vB;
+    uniform sampler2D uVelocity;
+
+    vec2 sampleVelocity (in vec2 uv) {
+        vec2 multiplier = vec2(1.0, 1.0);
+        if (uv.x < 0.0) { uv.x = 0.0; multiplier.x = -1.0; }
+        if (uv.x > 1.0) { uv.x = 1.0; multiplier.x = -1.0; }
+        if (uv.y < 0.0) { uv.y = 0.0; multiplier.y = -1.0; }
+        if (uv.y > 1.0) { uv.y = 1.0; multiplier.y = -1.0; }
+        return multiplier * texture2D(uVelocity, uv).xy;
+    }
+
+    void main () {
+        float L = sampleVelocity(vL).x;
+        float R = sampleVelocity(vR).x;
+        float T = sampleVelocity(vT).y;
+        float B = sampleVelocity(vB).y;
+        float div = 0.5 * (R - L + T - B);
+        gl_FragColor = vec4(div, 0.0, 0.0, 1.0);
+    }
+`);
+
+const curlShader = compileShader(gl.FRAGMENT_SHADER, `
+    precision highp float;
+    precision mediump sampler2D;
+
+    varying vec2 vUv;
+    varying vec2 vL;
+    varying vec2 vR;
+    varying vec2 vT;
+    varying vec2 vB;
+    uniform sampler2D uVelocity;
+
+    void main () {
+        float L = texture2D(uVelocity, vL).y;
+        float R = texture2D(uVelocity, vR).y;
+        float T = texture2D(uVelocity, vT).x;
+        float B = texture2D(uVelocity, vB).x;
+        float vorticity = R - L - T + B;
+        gl_FragColor = vec4(vorticity, 0.0, 0.0, 1.0);
+    }
+`);
+
+const vorticityShader = compileShader(gl.FRAGMENT_SHADER, `
+    precision highp float;
+    precision mediump sampler2D;
+
+    varying vec2 vUv;
+    varying vec2 vT;
+    varying vec2 vB;
+    uniform sampler2D uVelocity;
+    uniform sampler2D uCurl;
+    uniform float curl;
+    uniform float dt;
+
+    void main () {
+        float T = texture2D(uCurl, vT).x;
+        float B = texture2D(uCurl, vB).x;
+        float C = texture2D(uCurl, vUv).x;
+        vec2 force = vec2(abs(T) - abs(B), 0.0);
+        force *= 1.0 / length(force + 0.00001) * curl * C;
+        vec2 vel = texture2D(uVelocity, vUv).xy;
+        gl_FragColor = vec4(vel + force * dt, 0.0, 1.0);
+    }
+`);
+
+const pressureShader = compileShader(gl.FRAGMENT_SHADER, `
+    precision highp float;
+    precision mediump sampler2D;
+
+    varying vec2 vUv;
+    varying vec2 vL;
+    varying vec2 vR;
+    varying vec2 vT;
+    varying vec2 vB;
+    uniform sampler2D uPressure;
+    uniform sampler2D uDivergence;
+
+    vec2 boundary (in vec2 uv) {
+        uv = min(max(uv, 0.0), 1.0);
+        return uv;
+    }
+
+    void main () {
+        float L = texture2D(uPressure, boundary(vL)).x;
+        float R = texture2D(uPressure, boundary(vR)).x;
+        float T = texture2D(uPressure, boundary(vT)).x;
+        float B = texture2D(uPressure, boundary(vB)).x;
+        float C = texture2D(uPressure, vUv).x;
+        float divergence = texture2D(uDivergence, vUv).x;
+        float pressure = (L + R + B + T - divergence) * 0.25;
+        gl_FragColor = vec4(pressure, 0.0, 0.0, 1.0);
+    }
+`);
+
+const gradientSubtractShader = compileShader(gl.FRAGMENT_SHADER, `
+    precision highp float;
+    precision mediump sampler2D;
+
+    varying vec2 vUv;
+    varying vec2 vL;
+    varying vec2 vR;
+    varying vec2 vT;
+    varying vec2 vB;
+    uniform sampler2D uPressure;
+    uniform sampler2D uVelocity;
+
+    vec2 boundary (in vec2 uv) {
+        uv = min(max(uv, 0.0), 1.0);
+        return uv;
+    }
+
+    void main () {
+        float L = texture2D(uPressure, boundary(vL)).x;
+        float R = texture2D(uPressure, boundary(vR)).x;
+        float T = texture2D(uPressure, boundary(vT)).x;
+        float B = texture2D(uPressure, boundary(vB)).x;
+        vec2 velocity = texture2D(uVelocity, vUv).xy;
+        velocity.xy -= vec2(R - L, T - B);
+        gl_FragColor = vec4(velocity, 0.0, 1.0);
+    }
+`);
+
+let textureWidth;
+let textureHeight;
+let density;
+let velocity;
+let divergence;
+let curl;
+let pressure;
+initFramebuffers();
+
+const clearProgram = new GLProgram(baseVertexShader, clearShader);
+const displayProgram = new GLProgram(baseVertexShader, displayShader);
+const splatProgram = new GLProgram(baseVertexShader, splatShader);
+const advectionProgram = new GLProgram(baseVertexShader, ext.supportLinearFiltering ? advectionShader : advectionManualFilteringShader);
+const divergenceProgram = new GLProgram(baseVertexShader, divergenceShader);
+const curlProgram = new GLProgram(baseVertexShader, curlShader);
+const vorticityProgram = new GLProgram(baseVertexShader, vorticityShader);
+const pressureProgram = new GLProgram(baseVertexShader, pressureShader);
+const gradienSubtractProgram = new GLProgram(baseVertexShader, gradientSubtractShader);
+
+function initFramebuffers () {
+    textureWidth = gl.drawingBufferWidth >> config.TEXTURE_DOWNSAMPLE;
+    textureHeight = gl.drawingBufferHeight >> config.TEXTURE_DOWNSAMPLE;
+
+    const texType = ext.halfFloatTexType;
+    const rgba = ext.formatRGBA;
+    const rg   = ext.formatRG;
+    const r    = ext.formatR;
+
+    density    = createDoubleFBO(2, textureWidth, textureHeight, rgba.internalFormat, rgba.format, texType, ext.supportLinearFiltering ? gl.LINEAR : gl.NEAREST);
+    velocity   = createDoubleFBO(0, textureWidth, textureHeight, rg.internalFormat, rg.format, texType, ext.supportLinearFiltering ? gl.LINEAR : gl.NEAREST);
+    divergence = createFBO      (4, textureWidth, textureHeight, r.internalFormat, r.format, texType, gl.NEAREST);
+    curl       = createFBO      (5, textureWidth, textureHeight, r.internalFormat, r.format, texType, gl.NEAREST);
+    pressure   = createDoubleFBO(6, textureWidth, textureHeight, r.internalFormat, r.format, texType, gl.NEAREST);
+}
+
+function createFBO (texId, w, h, internalFormat, format, type, param) {
+    gl.activeTexture(gl.TEXTURE0 + texId);
+    let texture = gl.createTexture();
+    gl.bindTexture(gl.TEXTURE_2D, texture);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, param);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, param);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    gl.texImage2D(gl.TEXTURE_2D, 0, internalFormat, w, h, 0, format, type, null);
+
+    let fbo = gl.createFramebuffer();
+    gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
+    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture, 0);
+    gl.viewport(0, 0, w, h);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+
+    return [texture, fbo, texId];
+}
+
+function createDoubleFBO (texId, w, h, internalFormat, format, type, param) {
+    let fbo1 = createFBO(texId    , w, h, internalFormat, format, type, param);
+    let fbo2 = createFBO(texId + 1, w, h, internalFormat, format, type, param);
+
+    return {
+        get read () {
+            return fbo1;
+        },
+        get write () {
+            return fbo2;
+        },
+        swap () {
+            let temp = fbo1;
+            fbo1 = fbo2;
+            fbo2 = temp;
+        }
+    }
+}
+
+const blit = (() => {
+    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, -1, 1, 1, 1, 1, -1]), gl.STATIC_DRAW);
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, gl.createBuffer());
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array([0, 1, 2, 0, 2, 3]), gl.STATIC_DRAW);
+    gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(0);
+
+    return (destination) => {
+        gl.bindFramebuffer(gl.FRAMEBUFFER, destination);
+        gl.drawElements(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT, 0);
+    }
+})();
+
+let lastTime = Date.now();
+multipleSplats(parseInt(Math.random() * 20) + 5);
+update();
+
+function update () {
+    resizeCanvas();
+
+    const dt = Math.min((Date.now() - lastTime) / 1000, 0.016);
+    lastTime = Date.now();
+
+    gl.viewport(0, 0, textureWidth, textureHeight);
+
+    if (splatStack.length > 0)
+        multipleSplats(splatStack.pop());
+
+    advectionProgram.bind();
+    gl.uniform2f(advectionProgram.uniforms.texelSize, 1.0 / textureWidth, 1.0 / textureHeight);
+    gl.uniform1i(advectionProgram.uniforms.uVelocity, velocity.read[2]);
+    gl.uniform1i(advectionProgram.uniforms.uSource, velocity.read[2]);
+    gl.uniform1f(advectionProgram.uniforms.dt, dt);
+    gl.uniform1f(advectionProgram.uniforms.dissipation, config.VELOCITY_DISSIPATION);
+    blit(velocity.write[1]);
+    velocity.swap();
+
+    gl.uniform1i(advectionProgram.uniforms.uVelocity, velocity.read[2]);
+    gl.uniform1i(advectionProgram.uniforms.uSource, density.read[2]);
+    gl.uniform1f(advectionProgram.uniforms.dissipation, config.DENSITY_DISSIPATION);
+    blit(density.write[1]);
+    density.swap();
+
+    for (let i = 0; i < pointers.length; i++) {
+        const pointer = pointers[i];
+        if (pointer.moved) {
+            splat(pointer.x, pointer.y, pointer.dx, pointer.dy, pointer.color);
+            pointer.moved = false;
+        }
+    }
+
+    curlProgram.bind();
+    gl.uniform2f(curlProgram.uniforms.texelSize, 1.0 / textureWidth, 1.0 / textureHeight);
+    gl.uniform1i(curlProgram.uniforms.uVelocity, velocity.read[2]);
+    blit(curl[1]);
+
+    vorticityProgram.bind();
+    gl.uniform2f(vorticityProgram.uniforms.texelSize, 1.0 / textureWidth, 1.0 / textureHeight);
+    gl.uniform1i(vorticityProgram.uniforms.uVelocity, velocity.read[2]);
+    gl.uniform1i(vorticityProgram.uniforms.uCurl, curl[2]);
+    gl.uniform1f(vorticityProgram.uniforms.curl, config.CURL);
+    gl.uniform1f(vorticityProgram.uniforms.dt, dt);
+    blit(velocity.write[1]);
+    velocity.swap();
+
+    divergenceProgram.bind();
+    gl.uniform2f(divergenceProgram.uniforms.texelSize, 1.0 / textureWidth, 1.0 / textureHeight);
+    gl.uniform1i(divergenceProgram.uniforms.uVelocity, velocity.read[2]);
+    blit(divergence[1]);
+
+    clearProgram.bind();
+    let pressureTexId = pressure.read[2];
+    gl.activeTexture(gl.TEXTURE0 + pressureTexId);
+    gl.bindTexture(gl.TEXTURE_2D, pressure.read[0]);
+    gl.uniform1i(clearProgram.uniforms.uTexture, pressureTexId);
+    gl.uniform1f(clearProgram.uniforms.value, config.PRESSURE_DISSIPATION);
+    blit(pressure.write[1]);
+    pressure.swap();
+
+    pressureProgram.bind();
+    gl.uniform2f(pressureProgram.uniforms.texelSize, 1.0 / textureWidth, 1.0 / textureHeight);
+    gl.uniform1i(pressureProgram.uniforms.uDivergence, divergence[2]);
+    pressureTexId = pressure.read[2];
+    gl.uniform1i(pressureProgram.uniforms.uPressure, pressureTexId);
+    gl.activeTexture(gl.TEXTURE0 + pressureTexId);
+    for (let i = 0; i < config.PRESSURE_ITERATIONS; i++) {
+        gl.bindTexture(gl.TEXTURE_2D, pressure.read[0]);
+        blit(pressure.write[1]);
+        pressure.swap();
+    }
+
+    gradienSubtractProgram.bind();
+    gl.uniform2f(gradienSubtractProgram.uniforms.texelSize, 1.0 / textureWidth, 1.0 / textureHeight);
+    gl.uniform1i(gradienSubtractProgram.uniforms.uPressure, pressure.read[2]);
+    gl.uniform1i(gradienSubtractProgram.uniforms.uVelocity, velocity.read[2]);
+    blit(velocity.write[1]);
+    velocity.swap();
+
+    gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
+    displayProgram.bind();
+    gl.uniform1i(displayProgram.uniforms.uTexture, density.read[2]);
+    blit(null);
+
+    requestAnimationFrame(update);
+}
+
+function splat (x, y, dx, dy, color) {
+    splatProgram.bind();
+    gl.uniform1i(splatProgram.uniforms.uTarget, velocity.read[2]);
+    gl.uniform1f(splatProgram.uniforms.aspectRatio, canvas.width / canvas.height);
+    gl.uniform2f(splatProgram.uniforms.point, x / canvas.width, 1.0 - y / canvas.height);
+    gl.uniform3f(splatProgram.uniforms.color, dx, -dy, 1.0);
+    gl.uniform1f(splatProgram.uniforms.radius, config.SPLAT_RADIUS);
+    blit(velocity.write[1]);
+    velocity.swap();
+
+    gl.uniform1i(splatProgram.uniforms.uTarget, density.read[2]);
+    gl.uniform3f(splatProgram.uniforms.color, color[0] * 0.3, color[1] * 0.3, color[2] * 0.3);
+    blit(density.write[1]);
+    density.swap();
+}
+
+function multipleSplats (amount) {
+    for (let i = 0; i < amount; i++) {
+        const color = [Math.random() * 10, Math.random() * 10, Math.random() * 10];
+        const x = canvas.width * Math.random();
+        const y = canvas.height * Math.random();
+        const dx = 1000 * (Math.random() - 0.5);
+        const dy = 1000 * (Math.random() - 0.5);
+        splat(x, y, dx, dy, color);
+    }
+}
+
+function resizeCanvas () {
+    if (canvas.width != canvas.clientWidth || canvas.height != canvas.clientHeight) {
+        canvas.width = canvas.clientWidth;
+        canvas.height = canvas.clientHeight;
+        initFramebuffers();
+    }
+}
+
+canvas.addEventListener('mousemove', (e) => {
+    pointers[0].moved = pointers[0].down;
+    pointers[0].dx = (e.offsetX - pointers[0].x) * 10.0;
+    pointers[0].dy = (e.offsetY - pointers[0].y) * 10.0;
+    pointers[0].x = e.offsetX;
+    pointers[0].y = e.offsetY;
+});
+
+canvas.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+    const touches = e.targetTouches;
+    for (let i = 0; i < touches.length; i++) {
+        let pointer = pointers[i];
+        pointer.moved = pointer.down;
+        pointer.dx = (touches[i].pageX - pointer.x) * 10.0;
+        pointer.dy = (touches[i].pageY - pointer.y) * 10.0;
+        pointer.x = touches[i].pageX;
+        pointer.y = touches[i].pageY;
+    }
+}, false);
+
+canvas.addEventListener('mousedown', () => {
+    pointers[0].down = true;
+    pointers[0].color = [Math.random() + 0.2, Math.random() + 0.2, Math.random() + 0.2];
+});
+
+canvas.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    const touches = e.targetTouches;
+    for (let i = 0; i < touches.length; i++) {
+        if (i >= pointers.length)
+            pointers.push(new pointerPrototype());
+
+        pointers[i].id = touches[i].identifier;
+        pointers[i].down = true;
+        pointers[i].x = touches[i].pageX;
+        pointers[i].y = touches[i].pageY;
+        pointers[i].color = [Math.random() + 0.2, Math.random() + 0.2, Math.random() + 0.2];
+    }
+});
+
+window.addEventListener('mouseup', () => {
+    pointers[0].down = false;
+});
+
+window.addEventListener('touchend', (e) => {
+    const touches = e.changedTouches;
+    for (let i = 0; i < touches.length; i++)
+        for (let j = 0; j < pointers.length; j++)
+            if (touches[i].identifier == pointers[j].id)
+                pointers[j].down = false;
+});
+
+document.addEventListener('DOMContentLoaded', function (e) {
+    let typed = new Typed('.typeline', {
+      strings: [
+        "Hi there! I'm Helitha.",
+        "I'm a Developer.",
+        "I'm a Designer.",
+        'I love building web apps.',
+      ],
+      typeSpeed: 40,
+      backSpeed: 40,
+      loop: true,
+    })
+  })
