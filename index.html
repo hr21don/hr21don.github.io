@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,68 +16,108 @@
 	<link rel="stylesheet" href="/css/reset.css">
 	<link rel="stylesheet" href="/css/style.css">
 </head>
+
 <body>
 	<main>
 		<canvas id="c"></canvas>
-	    <p id="p_text"><span class="typeline"></span></p>
+		<p id="p_text"><span class="typeline"></span></p>
 		<!-- Find your icons from here - https://fontawesome.com/icons?d=gallery&s=brands -->
 		<div class="icons-social">
-			<a target="_blank" href="https://github.com/hr21don" aria-label="Github-Link"><i class="fab fa-github fa-animated"></i></a>
-			<a target="_blank" href="https://www.behance.net/hrdevelopment2021" aria-label="Behance-Link"><i class="fab fa-behance fa-animated"></i></a>
-			<a target="_blank" href="https://www.linkedin.com/in/helitharupasinghe/" aria-label="LinkedIn-Link"><i class="fab fa-linkedin fa-animated"></i></a>
-			<a target="_blank" href="https://dev.to/hr21don" aria-label="Dev-Link"><i class="fab fa-dev fa-animated"></i></a>
-      		<a target="_blank" href="https://medium.com/@hr-development" aria-label="Medium-Link"><i class="fab fa-medium fa-animated"></i></a>
-			<a target="_blank" href="https://dribbble.com/hr21don" aria-label="Dribble-Link"><i class="fab fa-dribbble fa-animated"></i></a>
-			<a target="_blank" href="https://codepen.io/hr21don" aria-label="CodePen-Link"><i class="fab fa-codepen fa-animated"></i></a>
-      		<a target="_blank" href="https://www.figma.com/community/file/1218870602283863949" aria-label="Figma-Link"><i class="fab fa-figma fa-animated"></i></a>
-    </div>
-	<div class="audio-wrapper">
-		<audio id="audio" autoPlay loop>
-			<source src="/music/abstract-jazz.mp3" preload="metadata" type="audio/mpeg"/>
-			 Your browser does not support the audio element.
-		</audio>
-		<button id="playPauseBTN" onclick="playPause()">Play ►</button>
+			<a target="_blank" href="https://github.com/hr21don" aria-label="Github-Link" class="cursor-hover-item" data-cursor-text="View Github" data-cursor-text-repeat="6"><i
+					class="fab fa-github fa-animated"></i></a>
+			<a target="_blank" href="https://www.behance.net/hrdevelopment2021" aria-label="Behance-Link" class="cursor-hover-item" data-cursor-text="View Behance" data-cursor-text-repeat="6"><i
+					class="fab fa-behance fa-animated"></i></a>
+			<a target="_blank" href="https://www.linkedin.com/in/helitharupasinghe/" aria-label="LinkedIn-Link" class="cursor-hover-item" data-cursor-text="View LinkedIn" data-cursor-text-repeat="6"><i
+					class="fab fa-linkedin fa-animated"></i></a>
+			<a target="_blank" href="https://dev.to/hr21don" aria-label="Dev-Link" class="cursor-hover-item" data-cursor-text="View Dev Blog" data-cursor-text-repeat="6"><i
+					class="fab fa-dev fa-animated"></i></a>
+			<a target="_blank" href="https://medium.com/@hr-development" aria-label="Medium-Link" class="cursor-hover-item" data-cursor-text="View Medium Blog" data-cursor-text-repeat="6"><i
+					class="fab fa-medium fa-animated"></i></a>
+			<a target="_blank" href="https://dribbble.com/hr21don" aria-label="Dribble-Link" class="cursor-hover-item" data-cursor-text="View Dribble" data-cursor-text-repeat="6"><i
+					class="fab fa-dribbble fa-animated"></i></a>
+			<a target="_blank" href="https://codepen.io/hr21don" aria-label="CodePen-Link" class="cursor-hover-item" data-cursor-text="View CodePen" data-cursor-text-repeat="6"><i
+					class="fab fa-codepen fa-animated"></i></a>
+			<a target="_blank" href="https://www.figma.com/community/file/1218870602283863949"
+				aria-label="Figma-Link" class="cursor-hover-item" data-cursor-text="View Figma" data-cursor-text-repeat="6"><i class="fab fa-figma fa-animated"></i></a>
 		</div>
+		<div class="audio-wrapper">
+			<audio id="audio" loop>
+				<source src="/music/abstract-jazz.mp3" preload="metadata" type="audio/mpeg" />
+				Your browser does not support the audio element.
+			</audio>
+
+			<div id="playPauseBTN" onclick="playPause()" class="sound-btn sound-btn--in">
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+		</div>
+ <!-- Custom Cursor -->
+ <div class="cursor"></div>
+ <div class="cursor-follower"></div>
 	</main>
 	<script>
-	var audio = document.getElementById('audio');
+		var audio = document.getElementById('audio');
 		var playPauseBTN = document.getElementById('playPauseBTN');
 		var count = 0;
-		
-		function playPause(){
-			if(count == 0){
-				count = 1;
+
+		function playPause() {
+			if (audio.paused) {
 				audio.play();
-				playPauseBTN.innerHTML = "Pause";
-			}else{
-				count = 0;
+				playPauseBTN.classList.add('is-playing');
+				localStorage.setItem('audioState', 'playing');
+			} else {
 				audio.pause();
-				playPauseBTN.innerHTML = "Play ►";
+				playPauseBTN.classList.remove('is-playing');
+				localStorage.setItem('audioState', 'paused');
 			}
-		
 		}
-		
-		function stop(){
-			playPause()
+
+		function stop() {
 			audio.pause();
 			audio.currentTime = 0;
-			playPauseBTN.innerHTML = "Play ►";
+			playPauseBTN.classList.remove('is-playing');
+			localStorage.setItem('audioState', 'paused')
 		}
-		
-		</script>
-	 <!-- Core theme JS-->
-	 <script src="main.js"></script>
-	 <!--JQUERY CDN -->
-	 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	 <!--Typed CDN-->
-	 <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.6/lib/typed.min.js"></script>
-	 <!--Service worker-->
-	 <script>
+
+		window.addEventListener('DOMContentLoaded', () => {
+			const savedState = localStorage.getItem('audioState');
+
+			if (savedState === 'playing') {
+				// Wait for user interaction to allow autoplay in modern browsers
+				document.addEventListener('click', () => {
+					audio.play();
+					playPauseBTN.classList.add('is-playing');
+				}, { once: true });
+			}
+		});
+	</script>
+	<!-- Core theme JS-->
+	<script src="main.js"></script>
+	<!--JQUERY CDN -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<!--Typed CDN-->
+	<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.6/lib/typed.min.js"></script>
+	<!--GSAP CDN-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+	<script src="https://unpkg.com/circletype@2.3.0/dist/circletype.min.js"></script>
+	<!--Service worker-->
+	<script>
 		if ('serviceWorker' in navigator) {
-		  navigator.serviceWorker.register('/service-worker.js')
-			.then(() => console.log('Service Worker registered successfully.'))
-			.catch((error) => console.error('Error registering Service Worker:', error));
+			navigator.serviceWorker.register('/service-worker.js')
+				.then(() => console.log('Service Worker registered successfully.'))
+				.catch((error) => console.error('Error registering Service Worker:', error));
 		}
-	  </script>
+	</script>
+		<script src="gsap.js"></script>
 </body>
+
 </html>
