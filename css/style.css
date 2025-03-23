@@ -215,6 +215,7 @@ main > .tagline {
 	height: 100%;
 	position: absolute;
 	font-size: 6px;
+	font-weight: bold;
 	top: 70%;
 	left: 50%;
 	transform: translate(-50%, -50%);
@@ -229,7 +230,7 @@ main > .tagline {
   }
   
   .cursor.active {
-	transform: scale(6);
+	transform: scale(4);
 	background: rgb(255, 255, 255);
   }
   
